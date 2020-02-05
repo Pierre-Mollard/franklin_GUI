@@ -17,6 +17,7 @@
 #include <sstream>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/Pose2D.h>
+#include <std_msgs/Bool.h>
 #include <std_msgs/Float32.h>
 #include "../include/franklin_gui/qnode.hpp"
 
@@ -43,6 +44,12 @@ QNode::~QNode() {
 	wait();
 }
 
+void test(const std_msgs::Float32 msg){
+	int progressDataTest = (int) (msg.data*100);
+	ROS_INFO("Test ");
+
+}
+
 bool QNode::init() {
 	ros::init(init_argc,init_argv,"franklin_gui");
 	if ( ! ros::master::check() ) {
@@ -53,7 +60,8 @@ bool QNode::init() {
 	// Add your ros communications here.
 	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
 	pub_dest = n.advertise<geometry_msgs::Pose2D>("destination", 1000);
-	ros::Subscriber sub_info_dest = n.subscribe("f_info_dest", 1, &QNode::info_dest_Callback, this);
+	pub_stop = n.advertise<std_msgs::Bool>("destination/stop", 1000);
+	ros::Subscriber sub_info_dest = n.subscribe("f_info_dest", 1000, test);
 
 	start();
 	return true;
@@ -72,7 +80,8 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 	// Add your ros communications here.
 	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
 	pub_dest = n.advertise<geometry_msgs::Pose2D>("destination", 1000);
-	ros::Subscriber sub_info_dest = n.subscribe("f_info_dest", 1, &QNode::info_dest_Callback, this);
+	pub_stop = n.advertise<std_msgs::Bool>("destination/stop", 1000);
+	ros::Subscriber sub_info_dest = n.subscribe("f_info_dest", 1000, test);
 
 	start();
 	return true;
@@ -142,8 +151,15 @@ void QNode::sendTargetPos(double pX, double pY, double pT){
 }
 
 void QNode::info_dest_Callback(const std_msgs::Float32 msg){
-	progressData = (int) (msg.data*100);
+	this->progressData = (int) (msg.data*100);
+	  ROS_INFO("DATA SENT : %d", this->progressData);
 	Q_EMIT progressDataS();
+}
+
+void QNode::sendStop(bool b){
+	std_msgs::Bool msg;
+	msg.data = b;
+	pub_stop.publish(msg);
 }
 
 }  // namespace franklin_gui

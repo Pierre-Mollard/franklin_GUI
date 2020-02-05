@@ -46,6 +46,7 @@ public:
 	bool init(const std::string &master_url, const std::string &host_url);
 	void run();
   void sendTargetPos(double pX, double pY, double pT);
+  void sendStop(bool b);
   void info_dest_Callback(const std_msgs::Float32 msg);
 	int progressData;
 
@@ -75,6 +76,7 @@ private:
   QStringListModel logging_model;
 
   ros::Publisher pub_dest;
+  ros::Publisher pub_stop;
 
 };
 

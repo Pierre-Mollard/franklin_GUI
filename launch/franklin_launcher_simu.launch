@@ -1,0 +1,15 @@
+<launch>
+
+  <arg name="multi_robot_name" default=""/>
+  <arg name="set_lidar_frame_id" default="base_scan"/>
+  <arg name="model" default="turtlebot3_burger.urdf.xacro"/>
+
+  <include file="$(find turtlebot3_gazebo)/launch/turtlebot3_empty_world.launch">
+    <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
+  </include>
+
+  <node name="frlk_curvetraj" pkg="franklin" type="frlk_curvetraj" output="screen"></node>
+  <node name="frlk_obstacles" pkg="franklin" type="frlk_obstacles" output="screen"></node>
+  <node name="franklin_gui" pkg="franklin_gui" type="franklin_gui" output="screen"></node>
+
+</launch>

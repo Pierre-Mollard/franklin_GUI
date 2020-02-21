@@ -1,0 +1,7 @@
+<launch>
+
+  <node name="frlk_curvetraj" pkg="franklin" type="frlk_curvetraj" output="screen"></node>
+  <node name="frlk_obstacles" pkg="franklin" type="frlk_obstacles" output="screen"></node>
+  <node name="franklin_gui" pkg="franklin_gui" type="franklin_gui" output="screen"></node>
+
+</launch>

@@ -45,7 +45,7 @@ QNode::~QNode() {
 }
 
 void test(const std_msgs::Float32 msg){
-	int progressDataTest = (int) (msg.data*100);
+	//int progressDataTest = (int) (msg.data*100);
 	ROS_INFO("Test ");
 
 }
@@ -61,7 +61,7 @@ bool QNode::init() {
 	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
 	pub_dest = n.advertise<geometry_msgs::Pose2D>("destination", 1000);
 	pub_stop = n.advertise<std_msgs::Bool>("destination/stop", 1000);
-	ros::Subscriber sub_info_dest = n.subscribe("f_info_dest", 1000, test);
+	sub_info_dest = n.subscribe("f_info_dest", 1, &QNode::info_dest_Callback, this);
 
 	start();
 	return true;
@@ -81,7 +81,7 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
 	pub_dest = n.advertise<geometry_msgs::Pose2D>("destination", 1000);
 	pub_stop = n.advertise<std_msgs::Bool>("destination/stop", 1000);
-	ros::Subscriber sub_info_dest = n.subscribe("f_info_dest", 1000, test);
+	sub_info_dest = n.subscribe("f_info_dest", 1, &QNode::info_dest_Callback, this); //&franklin_gui::QNode::info_dest_Callback, this
 
 	start();
 	return true;
@@ -91,13 +91,14 @@ void QNode::run() {
 	ros::Rate loop_rate(1);
 	int count = 0;
 	while ( ros::ok() ) {
-
+		/*
 		std_msgs::String msg;
 		std::stringstream ss;
 		ss << "hello world " << count;
 		msg.data = ss.str();
 		chatter_publisher.publish(msg);
 		log(Info,std::string("I sent: ")+msg.data);
+		*/
 		ros::spinOnce();
 		loop_rate.sleep();
 		++count;
@@ -143,6 +144,7 @@ void QNode::log( const LogLevel &level, const std::string &msg) {
 }
 
 void QNode::sendTargetPos(double pX, double pY, double pT){
+	ROS_INFO("INFO POS SENT !");
 	geometry_msgs::Pose2D pose2D;
 	pose2D.x = pX;
 	pose2D.y = pY;
@@ -151,12 +153,13 @@ void QNode::sendTargetPos(double pX, double pY, double pT){
 }
 
 void QNode::info_dest_Callback(const std_msgs::Float32 msg){
+	ROS_INFO("PROGRESS UPDATE RECEIVE");
 	this->progressData = (int) (msg.data*100);
-	  ROS_INFO("DATA SENT : %d", this->progressData);
 	Q_EMIT progressDataS();
 }
 
 void QNode::sendStop(bool b){
+	ROS_INFO("INFO STOP SENT !");
 	std_msgs::Bool msg;
 	msg.data = b;
 	pub_stop.publish(msg);

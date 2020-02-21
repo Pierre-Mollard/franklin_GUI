@@ -77,6 +77,7 @@ private:
 
   ros::Publisher pub_dest;
   ros::Publisher pub_stop;
+  ros::Subscriber sub_info_dest;
 
 };
 

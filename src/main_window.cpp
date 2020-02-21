@@ -54,7 +54,7 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
 		//My connects
 		  QObject::connect(ui.pushButton_GO, SIGNAL(clicked()), this, SLOT(sendTargetPos()));
 			QObject::connect(ui.pushButton_STOP, SIGNAL(clicked()), this, SLOT(sendStop()));
-			QObject::connect(&qnode, SIGNAL(progressDataS()), this, SLOT(close()));
+			QObject::connect(&qnode, SIGNAL(progressDataS()), this, SLOT(updateProgress()));
 			ui.progressBar_INFO->reset();
 			qnode.init();
 }
@@ -183,7 +183,7 @@ void MainWindow::updateProgress(){
 }
 
 void MainWindow::sendStop(){
-	qnode.sendStop(false);
+	qnode.sendStop(true);
 }
 
 }  // namespace franklin_gui

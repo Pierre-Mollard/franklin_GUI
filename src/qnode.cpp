@@ -11,14 +11,20 @@
 *****************************************************************************/
 
 #include <ros/ros.h>
+#include <tf/tf.h>
 #include <ros/network.h>
 #include <string>
 #include <std_msgs/String.h>
 #include <sstream>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/Pose2D.h>
+#include <nav_msgs/Odometry.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/Float32.h>
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+#include <algorithm>
 #include "../include/franklin_gui/qnode.hpp"
 
 /*****************************************************************************
@@ -62,6 +68,7 @@ bool QNode::init() {
 	pub_dest = n.advertise<geometry_msgs::Pose2D>("destination", 1000);
 	pub_stop = n.advertise<std_msgs::Bool>("destination/stop", 1000);
 	sub_info_dest = n.subscribe("f_info_dest", 1, &QNode::info_dest_Callback, this);
+	sub_odom = n.subscribe("odom", 1, &QNode::odom_Callback, this);
 
 	start();
 	return true;
@@ -82,6 +89,7 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 	pub_dest = n.advertise<geometry_msgs::Pose2D>("destination", 1000);
 	pub_stop = n.advertise<std_msgs::Bool>("destination/stop", 1000);
 	sub_info_dest = n.subscribe("f_info_dest", 1, &QNode::info_dest_Callback, this); //&franklin_gui::QNode::info_dest_Callback, this
+	sub_odom = n.subscribe("odom", 1, &QNode::odom_Callback, this);
 
 	start();
 	return true;
@@ -156,6 +164,30 @@ void QNode::info_dest_Callback(const std_msgs::Float32 msg){
 	ROS_INFO("PROGRESS UPDATE RECEIVE");
 	this->progressData = (int) (msg.data*100);
 	Q_EMIT progressDataS();
+}
+
+void QNode::odom_Callback(const nav_msgs::Odometry odom){
+	ROS_INFO("ODOM RECEIVE");
+	this->odom_X = odom.pose.pose.position.x;
+	this->odom_Y = odom.pose.pose.position.y;
+/*
+	// quaternion to RPY conversion
+	tf::Quaternion q(
+			odom.pose.pose.orientation.x,
+			odom.pose.pose.orientation.y,
+			odom.pose.pose.orientation.z,
+			odom.pose.pose.orientation.w);
+	tf::Matrix3x3 m(q);
+	double roll, pitch, yaw;
+	m.getRPY(roll, pitch, yaw);
+*/
+	// angular position
+	//this->odom_T = yaw;
+	this->odom_T = odom.pose.pose.orientation.z;
+
+	ROS_INFO("X = %lf", this->odom_X);
+
+	Q_EMIT odomS();
 }
 
 void QNode::sendStop(bool b){

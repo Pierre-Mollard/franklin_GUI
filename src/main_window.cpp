@@ -11,6 +11,7 @@
 
 #include <QtGui>
 #include <QMessageBox>
+#include <QLCDNumber>
 #include <iostream>
 #include "../include/franklin_gui/main_window.hpp"
 
@@ -56,6 +57,7 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
 			QObject::connect(ui.pushButton_STOP, SIGNAL(clicked()), this, SLOT(sendStop()));
 			QObject::connect(&qnode, SIGNAL(progressDataS()), this, SLOT(updateProgress()));
 			ui.progressBar_INFO->reset();
+			QObject::connect(&qnode, SIGNAL(odomS()), this, SLOT(updateOdom()));
 			qnode.init();
 }
 
@@ -180,6 +182,12 @@ void MainWindow::sendTargetPos(){
 
 void MainWindow::updateProgress(){
 	ui.progressBar_INFO->setValue(qnode.progressData);
+}
+
+void MainWindow::updateOdom(){
+	ui.lcdNumber_X->display(qnode.odom_X);
+	ui.lcdNumber_Y->display(qnode.odom_Y);
+	ui.lcdNumber_T->display(qnode.odom_T);
 }
 
 void MainWindow::sendStop(){

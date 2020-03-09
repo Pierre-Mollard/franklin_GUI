@@ -25,6 +25,7 @@
 #include <QThread>
 #include <QStringListModel>
 #include <std_msgs/Float32.h>
+#include <nav_msgs/Odometry.h>
 
 
 /*****************************************************************************
@@ -48,7 +49,9 @@ public:
   void sendTargetPos(double pX, double pY, double pT);
   void sendStop(bool b);
   void info_dest_Callback(const std_msgs::Float32 msg);
+  void odom_Callback(const nav_msgs::Odometry odom);
 	int progressData;
+  float odom_X, odom_Y,odom_T;
 
 	/*********************
 	** Logging
@@ -68,6 +71,7 @@ Q_SIGNALS:
 	void loggingUpdated();
   void rosShutdown();
   void progressDataS();
+  void odomS();
 
 private:
 	int init_argc;
@@ -78,6 +82,7 @@ private:
   ros::Publisher pub_dest;
   ros::Publisher pub_stop;
   ros::Subscriber sub_info_dest;
+  ros::Subscriber sub_odom;
 
 };
 

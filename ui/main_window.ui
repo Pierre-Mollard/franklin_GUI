@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>955</width>
-    <height>442</height>
+    <height>494</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,8 +30,8 @@
       <widget class="QProgressBar" name="progressBar_INFO">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>300</y>
+         <x>40</x>
+         <y>340</y>
          <width>503</width>
          <height>25</height>
         </rect>
@@ -44,7 +44,7 @@
        <property name="geometry">
         <rect>
          <x>300</x>
-         <y>50</y>
+         <y>40</y>
          <width>281</width>
          <height>131</height>
         </rect>
@@ -145,7 +145,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Z : </string>
+         <string>T : </string>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton_GO">
@@ -194,7 +194,7 @@
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>260</y>
+         <y>300</y>
          <width>111</width>
          <height>17</height>
         </rect>
@@ -252,8 +252,8 @@
       <widget class="QLabel" name="label_8">
        <property name="geometry">
         <rect>
-         <x>420</x>
-         <y>350</y>
+         <x>410</x>
+         <y>390</y>
          <width>191</width>
          <height>20</height>
         </rect>
@@ -266,6 +266,155 @@
        <property name="text">
         <string>Copyright ©. Franklin Team</string>
        </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_4">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>190</y>
+         <width>281</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Actual Position &amp; Orientation :</string>
+       </property>
+       <widget class="QLabel" name="label_9">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>67</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>X :</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_10">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>30</y>
+          <width>67</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Y :</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_11">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>30</y>
+          <width>67</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>T : </string>
+        </property>
+       </widget>
+       <widget class="QLCDNumber" name="lcdNumber_X">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>64</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Panel</enum>
+        </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="midLineWidth">
+         <number>0</number>
+        </property>
+        <property name="smallDecimalPoint">
+         <bool>false</bool>
+        </property>
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+        <property name="value" stdset="0">
+         <double>0.000000000000000</double>
+        </property>
+       </widget>
+       <widget class="QLCDNumber" name="lcdNumber_Y">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>60</y>
+          <width>64</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Panel</enum>
+        </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="midLineWidth">
+         <number>0</number>
+        </property>
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+       </widget>
+       <widget class="QLCDNumber" name="lcdNumber_T">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>60</y>
+          <width>64</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Panel</enum>
+        </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="midLineWidth">
+         <number>0</number>
+        </property>
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+       </widget>
+       <zorder>label_9</zorder>
+       <zorder>label_10</zorder>
+       <zorder>label_11</zorder>
+       <zorder>lcdNumber_X</zorder>
+       <zorder>lcdNumber_Y</zorder>
+       <zorder>lcdNumber_T</zorder>
+       <zorder>lcdNumber</zorder>
       </widget>
      </widget>
     </item>

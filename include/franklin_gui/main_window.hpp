@@ -13,6 +13,7 @@
 *****************************************************************************/
 
 #include <QtGui/QMainWindow>
+#include <QLCDNumber>
 #include "ui_main_window.h"
 #include "qnode.hpp"
 
@@ -55,6 +56,7 @@ public Q_SLOTS:
     void updateLoggingView(); // no idea why this can't connect automatically
 		void sendTargetPos();
 		void updateProgress();
+		void updateOdom();
 		void sendStop();
 
 private:
